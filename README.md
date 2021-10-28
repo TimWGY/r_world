@@ -1,5 +1,5 @@
 # A Map of the R world
-#### A Pythonist's Journey to the R World
+## A Pythonist's Journey to the R World
 
 This project analyzes and visualizes the R programming language ecosystem, with the goal of 1) helping analysts find tools most suitable for their goals, and 2) helping developers write interoperable codes and fill the gaps in the ecosystem.
 
@@ -9,13 +9,13 @@ As a person who code mostly in Python, picking up R is a bit of struggle at firs
 
 This is the basic idea behind this project, map and visualize R packages based on semantic information and calculate metrics to help people find the "right" toolset. 
 
-#### Project Structure and Roadmap
+## Project Structure and Roadmap
 
 My plan is to break down the project into two stages. Stage I focus on creating some proof-of-concept visualizations, verifying whether semantic clustering is feasible and testing what strategies are effective for visual exploration. Stage II will calculate additional metrics and fine-tune clustering results, as well as build an interactive website with recommendation feature. 
 
 Stage I have four steps: Collection, Modeling, Visualization. 
 
-##### Collection
+### Collection
 
 There are multiple sources that host information about R packages. I initially tried to pull data from the [CRAN](https://cran.r-project.org) website, since it has a clean webpage structure and contain links to full package documentation. But I soon realized two problems: 1) CRAN website doesn't include popularity indicator like number of downloads or github star count 2) Package documentations are in PDF format, which are very hard to parse and clean in batch (this could become a project of its own). 
 
@@ -23,7 +23,7 @@ After banging my head for two days, I suddenly realized that I can get the data 
 
 There are many interesting challenges with data cleaning and feature engineering based on metrics and metadata, but I would like to skip them for now and focus on the visualization POC. 
 
-##### Modeling
+### Modeling
 
 To reveal patterns in large ecosystem, clustering is an intuitive method. Since the goal is to show which packages are for what tasks, titles and descriptions are the best information to work with. Here, we need to use some Natural Language Processing (NLP) techniques to make textual information amenable to clustering method. 
 
@@ -35,9 +35,9 @@ To do clustering with word-embedding, I first need to decide whether I want to u
 
 Wordclouds
 
-![wordclouds_image](/Users/timsmac/Documents/GitHub/r_world/README.assets/wordclouds_image.png)
+![wordclouds_image](./README.assets/wordclouds_image.png)
 
-##### Visualization
+### Visualization
 
 The most common way to display clustering results is through a scatter plot. 
 
@@ -63,13 +63,11 @@ Tooltip for more information.
 
 
 
-![word_embedding_to_viz](/Users/timsmac/Documents/GitHub/r_world/README.assets/word_embedding_to_viz.png)
+![word_embedding_to_viz](./README.assets/word_embedding_to_viz.png)
 
 Image source: [Word Embedding: Basics](https://medium.com/@hari4om/word-embedding-d816f643140) by [Hariom Gautam](https://medium.com/@hari4om)  
 
-
-
-#### Where to go from here? 
+## Where to go from here? 
 
 ![R-ecosystem](./README.assets/R-ecosystem.png)Screenshot from Talk [We R What We Ask: The Landscape of R Users on Stack Overflow](https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/We-R-What-We-Ask-The-Landscape-of-R-Users-on-Stack-Overflow) by [David Robinson](https://channel9.msdn.com/Events/Speakers/david-robinson) at useR! Conference July 2017
 
