@@ -1,5 +1,5 @@
 # A Map of the R world
-## A Pythonist's Journey to the R World
+### Why the map?
 
 This project analyzes and visualizes the R programming language ecosystem, with the goal of 1) helping analysts find tools most suitable for their goals, and 2) helping developers write interoperable codes and fill the gaps in the ecosystem.
 
