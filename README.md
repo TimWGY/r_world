@@ -31,7 +31,7 @@ To reveal patterns in large ecosystem, clustering is an intuitive method. Since 
 
 Topic modeling methods like LDA, PLSA are the most common techniques for clustering texts. Here, I choose to go with word-embedding-based clustering mainly because the by-product, **package embedding vector, can be used as coordinates in subsequent plotting step**. In comparison, the outputs of word-type-based clustering do not enjoy semantic similarity between representation of similar words. 
 
-There were two technical decisions to make. One, to use **pre-trained embedding or train new embedding** of R package descriptions. I experimented with both approaches and found out pre-trained embedding produce results that are too generic, thus not useful for guiding package selection. Second decision is which clustering algorithm to use. **Kmeans and DBSCAN** are the candidates I considered. I chose to go with Kmeans for its speed, and also tuning number of clusters (kmeans parameter) is more intuitive than tuning radius of clusters (DBSCAN parameter),  especially in a high-dimensional space.
+There were two technical decisions to make. One, to use **pre-trained embedding or train new embedding** of R package descriptions. I experimented with both approaches and found out pre-trained embedding produce results that are too generic, thus not useful for guiding package selection. For traing embedding, I used the FastText model distributed by Gensim libraries. Second decision is which clustering algorithm to use. **Kmeans and DBSCAN** are the candidates I considered. I chose to go with Kmeans for its speed, and also tuning number of clusters (kmeans parameter) is more intuitive than tuning radius of clusters (DBSCAN parameter),  especially in a high-dimensional space.
 
 At the end of this step, my clustering model assign packages to 100 clusters. The bar chart below shows how many packages are in each cluster. 
 
@@ -65,29 +65,41 @@ The initial result after reducing the data to 2D looks like this:
 
 <img src="./README.assets/all_packages_2D.png" alt="all_packages_2D" width="600" />
 
+After trying alpha and size adjustment, **overplotting** problem still exist for this scatter plot. But it is totally understandable, since it's hard to meaningfully map 10K+ packages on a 2D surface. So I make a choice to **show only the most downloaded** packages and **color the largest topic clusters**. 
 
+<img src="./README.assets/most_downloaded_colored.png" alt="all_packages_2D" width="600" />
 
-Overplotting.
+Better now, but still not meaningful. Let's encode the popularity of packages into size of graph elements. When designing this part, I realized number of downloads is not the only popularity metric. So, I decided to have the **circle size** represent the number of downloads, add a **ring around the circle** with width proportional to the project's GitHub star count. It is interesting that the **number of stars a package gets is not always proportional to its number of downloads** each month. Maybe some package are so basic and ubiquitous that we take them for granted and pay less attention to their development project.
+
+![basic idea](/Users/timsmac/Documents/GitHub/r_world/README.assets/basic idea.png)
+
+Then, I added annotations for the most popular packages from each cluster (ranked by a composite metric of downloads and stars). I also wrestled with Matplotlib library to make the rings fill outward instead of bleeding into the circles. Finally, a legend is added to guide visual search.
 
 <img src="./README.assets/r_world_2d_with_legend.png" alt="r_world_2d_with_legend" width="600" />
 
-Adding color (second variable).
+There are many interesting observations to make about this 2D scatter plot. Most notably is the fact that **clusters cut into each other's "territory"** because high-dimensional data is forcibly projected onto the 2D space. However, this seemingly un-welcomed effect reveals meaningful insights. 
 
-Adding size (third variable).
+For example, `ggplot2` is clustered into a topic cluster with `devtools` and `evaluate`, probably because they share the goal of making certain tasks systematic and easy to use. But on this 2D map, `ggplot2` is at the center of the "Visualization Kingdom of the North". On the sides of its throne are `patchwork` and `ggthemes` from the *Plotting and  themes* family and `scales` and `viridis` from the *Styling and color* family. `ggrepel`, being a member of the *data formatting* family, also left its siblings in the South to join the visualization group. In constrast, the two clusters of File I/O and Reporting are much more cohesive, members are close to each other and no one wanders away. 
 
-Redefining popularity.
+What surprised is that data wrangling packages like `dplyr`, `tibble`, `broom`, `data.table` are far apart from each other on the map. This got me wondering if they are actually closer in the original high-dimensional space. If we can fold the 2D map and make a hole on it, there may be closer paths between the clusters. 
 
-Adding ring (fourth variable).
+<img src="./README.assets/Einstein-rosen-bridge-model.png" alt="Einstein-rosen-bridge-model" width="600" />
 
-Going 3D.
+*MikeRun, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons*
 
-Navigation Camera.
+Well, it's still impossible to visually verify that in the 100-dimension space. We can at least try **going 3D!**
 
-Tooltip for more information.
+Implementing the 3D scatter plot is greatly simplified thanks to the Plotly library, but I still had my fair share of debugging to get the element styling right as well as adding tooltips, legend, footnote. 
+
+![3d_demo](/Users/timsmac/Documents/GitHub/r_world/README.assets/3d_demo.gif)
+
+From the 3D view, the `data.table` cluster (red) and `dplyr` cluster (orange) are actually closer than they are in 2D map. When I looked closer at the 3D neighborhood of the two, the `data.table` cluster tend to co-locate with statistical cluster while the `dplyr` cluster is closer to the file I/O cluster. While I am not sure this finding implies real differences in user habits or goals of developers, I think it does push me to research more about the packages and try them out in practice. After all, the goal of this project is to give us **a big picture view of the R world**, and the **curiosity and confidence** to navigate this amazing space!
+
+
 
 ## Where to go from here? 
 
-The clustering model 
+After I finished Phase I, I got intrigued by the idea of usage habits. 
 
 <img src="./README.assets/stackoverflow_r.png" alt="stackoverflow_r" width="600" />
 
@@ -98,3 +110,12 @@ Screenshot from Talk [We R What We Ask: The Landscape of R Users on Stack Overfl
 MetaCran does semantic search well, metrics calculation making sense
 
 Stage II focus on personalized experience, syntactic style, research circles, associative filtering recommendation, mining common combos, discover niche/boutique packages.
+
+
+
+
+
+Navigation Camera.
+
+![grapher_demo](./README.assets/grapher_demo.png)https://shiny.john-coene.com/cran/
+
