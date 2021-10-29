@@ -1,4 +1,8 @@
 # Map of the R world
+<p align='center'><img src="./README.assets/front1.png" alt="cover_image" width="600"/></p>
+
+
+
 ### A Pythonist's jouRney
 
 This project analyzes and visualizes the R package ecosystem to help people find the most suitable tool for their tasks.
