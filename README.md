@@ -91,7 +91,7 @@ Well, it's still impossible to visually verify that in the 100-dimension space. 
 
 Implementing the 3D scatter plot is greatly simplified thanks to the Plotly library, but I still had my fair share of debugging to get the element styling right as well as adding tooltips, legend, footnote. 
 
-![3d_demo](/Users/timsmac/Documents/GitHub/r_world/README.assets/3d_demo_compressed.gif)
+![3d_demo](./README.assets/3d_demo_compressed.gif)
 
 From the 3D view, the `data.table` cluster (red) and `dplyr` cluster (orange) are actually closer than they are in 2D map. When I looked closer at the 3D neighborhood of the two, the `data.table` cluster tend to co-locate with statistical cluster while the `dplyr` cluster is closer to the file I/O cluster. While I am not sure this finding implies real differences in user habits or goals of developers, I think it does push me to research more about the packages and try them out in practice. After all, the goal of this project is to give us **a big picture view of the R world**, and the **curiosity and confidence** to navigate this amazing space!
 
