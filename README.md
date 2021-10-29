@@ -97,6 +97,8 @@ Implementing the 3D scatter plot is greatly simplified thanks to the Plotly libr
 
 ![3d_demo](./README.assets/3d_demo_compressed.gif)
 
+###### *To play it yourself, download it [here](https://github.com/TimWGY/r_world/blob/main/r_world_3d_download_and_try_yourself.html) and open with any browser.*
+
 From the 3D view, the `data.table` cluster (red) and `dplyr` cluster (orange) are actually closer than they are in 2D map. When I looked closer at the 3D neighborhood of the two, the `data.table` cluster tend to co-locate with statistical cluster while the `dplyr` cluster is closer to the file I/O cluster. While I am not sure this finding implies real differences in user habits or goals of developers, I think it does push me to research more about the packages and try them out in practice. After all, the goal of this project is to give us **a big picture view of the R world**, and the **curiosity and confidence** to navigate this amazing space!
 
 
@@ -105,7 +107,7 @@ From the 3D view, the `data.table` cluster (red) and `dplyr` cluster (orange) ar
 
 After I finished Phase I, I got intrigued by the idea of **analyzing usage habits to see which packages work best together**. It turns out [David Robinson](https://github.com/dgrtwo), former data scientist at StackOverflow, had done such analysis and produced amazing visualization. 
 
-<img src="./README.assets/stackoverflow_r.png" alt="stackoverflow_r" width="900" />
+<img src="./README.assets/stackoverflow_r.png" alt="stackoverflow_r" width="800" />
 
 *Screenshot from Talk [We R What We Ask: The Landscape of R Users on Stack Overflow](https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/We-R-What-We-Ask-The-Landscape-of-R-Users-on-Stack-Overflow) by [David Robinson](https://channel9.msdn.com/Events/Speakers/david-robinson) at useR! Conference July 2017*
 
@@ -117,7 +119,7 @@ Last but not least, I encountered a website named [METACRAN](https://www.r-pkg.o
 
 One more thing, when designing the interactive 3D visualization, I experimented with many frameworks and libraries. The one that gives me the deepest impression is the R package `grapher` by [John Coene](https://github.com/JohnCoene). The navigation in the network is so smooth with "WASD" controls, and it makes me feels like Captain Kirk flying a starship in the R galaxy. The demonstration graph of this package happens to be the R package dependency network, which is very pretty not so insightful (given its color is purely based on coordinates). I tried to recreate the starship experience with my new semantic space data but couldn't get it working properly. I would be thrilled to learn if anyone know how to create such interaction for 3D visualization in R, Python, or even JS.
 
-<img src="./README.assets/grapher_demo.png" alt="grapher_demo" width="900" />
+<img src="./README.assets/grapher_demo.png" alt="grapher_demo" width="800" />
 
 *Screenshot from grapher package demonstration website: https://shiny.john-coene.com/cran/*.
 
