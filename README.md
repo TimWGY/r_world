@@ -55,6 +55,8 @@ Dimensionality reduction.
 
 Overplotting.
 
+![r_world_2d_with_legend](/Users/timsmac/Documents/GitHub/r_world/README.assets/r_world_2d_with_legend.png)
+
 Adding color (second variable).
 
 Adding size (third variable).
