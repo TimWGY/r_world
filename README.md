@@ -35,11 +35,11 @@ There were two technical decisions to make. One, to use **pre-trained embedding 
 
 At the end of this step, my clustering model assign packages to 100 clusters. The bar chart below shows how many packages are in each cluster. 
 
-<img src="./README.assets/number_of_packages_in_each_cluster.png" alt="number_of_packages_in_each_cluster" width="600"/>
+<img src="./README.assets/number_of_packages_in_each_cluster.png" alt="number_of_packages_in_each_cluster" width="900"/>
 
 Among these clusters, I chose thirteen **largest clusters**, assigning each of them a random, distinct color so that I can mark them in the R landscape. To identify the theme of each package cluster, I created a series of wordclouds (in different shades of the corresponding cluster color) and printed out the most downloaded packages within each cluster. 
 
-<img src="./README.assets/wordclouds.png" alt="wordclouds" width="600"/>
+<img src="./README.assets/wordclouds.png" alt="wordclouds" width="900"/>
 
 By observing the words and checking the top packages, I managed to **summarize the cluster themes** (and discovered many new R packages along the way). I can feel that the semantic clustering idea is working, but the model still has a lot of room for improvement. The choice of model parameter, initialization conditions, preprocessing techniques are all fascinating aspects that I only had a limited chance to tune. But let's move on to visualization for now.
 
@@ -49,7 +49,7 @@ Now that we have the clustering results, it's time to visualize it! You may ask,
 
 Fortunately, we have access to the package embedding vectors, which act as the coordinates of a package in the semantic space. What do I mean by that? 
 
-<img src="./README.assets/embedding_concept.png" alt="embedding_concept" width="400"/>
+<img src="./README.assets/embedding_concept.png" alt="embedding_concept" width="900"/>
 
 *Image source: [Word Embedding: Basics](https://medium.com/@hari4om/word-embedding-d816f643140) by [Hariom Gautam](https://medium.com/@hari4om)*  
 
@@ -63,19 +63,19 @@ To capture the different aspects of the words, we have to choose a large number 
 
 The initial result after reducing the data to 2D looks like this:
 
-<img src="./README.assets/all_packages_2D.png" alt="all_packages_2D" width="600" />
+<img src="./README.assets/all_packages_2D.png" alt="all_packages_2D" width="900" />
 
 After trying alpha and size adjustment, **overplotting** problem still exist for this scatter plot. But it is totally understandable, since it's hard to meaningfully map 10K+ packages on a 2D surface. So I make a choice to **show only the most downloaded** packages and **color the largest topic clusters**. 
 
-<img src="./README.assets/most_downloaded_colored.png" alt="all_packages_2D" width="600" />
+<img src="./README.assets/most_downloaded_colored.png" alt="all_packages_2D" width="900" />
 
 Better now, but still not meaningful. Let's encode the popularity of packages into size of graph elements. When designing this part, I realized number of downloads is not the only popularity metric. So, I decided to have the **circle size** represent the number of downloads, add a **ring around the circle** with width proportional to the project's GitHub star count. It is interesting that the **number of stars a package gets is not always proportional to its number of downloads** each month. Maybe some package are so basic and ubiquitous that we take them for granted and pay less attention to their development project.
 
-![basic idea](/Users/timsmac/Documents/GitHub/r_world/README.assets/basic idea.png)
+![basic idea](./README.assets/basic idea.png)
 
 Then, I added annotations for the most popular packages from each cluster (ranked by a composite metric of downloads and stars). I also wrestled with Matplotlib library to make the rings fill outward instead of bleeding into the circles. Finally, a legend is added to guide visual search.
 
-<img src="./README.assets/r_world_2d_with_legend.png" alt="r_world_2d_with_legend" width="600" />
+<img src="./README.assets/r_world_2d_with_legend.png" alt="r_world_2d_with_legend" width="900" />
 
 There are many interesting observations to make about this 2D scatter plot. Most notably is the fact that **clusters cut into each other's "territory"** because high-dimensional data is forcibly projected onto the 2D space. However, this seemingly un-welcomed effect reveals meaningful insights. 
 
@@ -83,7 +83,7 @@ For example, `ggplot2` is clustered into a topic cluster with `devtools` and `ev
 
 What surprised is that data wrangling packages like `dplyr`, `tibble`, `broom`, `data.table` are far apart from each other on the map. This got me wondering if they are actually closer in the original high-dimensional space. If we can fold the 2D map and make a hole on it, there may be closer paths between the clusters. 
 
-<img src="./README.assets/Einstein-rosen-bridge-model.png" alt="Einstein-rosen-bridge-model" width="600" />
+<p align="center"><img src="./README.assets/Einstein-rosen-bridge-model.png" alt="Einstein-rosen-bridge-model" width="500" /></p>
 
 *MikeRun, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons*
 
@@ -99,23 +99,21 @@ From the 3D view, the `data.table` cluster (red) and `dplyr` cluster (orange) ar
 
 ## Where to go from here? 
 
-After I finished Phase I, I got intrigued by the idea of usage habits. 
+After I finished Phase I, I got intrigued by the idea of **analyzing usage habits to see which packages work best together**. It turns out [David Robinson](https://github.com/dgrtwo), former data scientist at StackOverflow, had done such analysis and produced amazing visualization. 
 
-<img src="./README.assets/stackoverflow_r.png" alt="stackoverflow_r" width="600" />
+<img src="./README.assets/stackoverflow_r.png" alt="stackoverflow_r" width="900" />
 
-Screenshot from Talk [We R What We Ask: The Landscape of R Users on Stack Overflow](https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/We-R-What-We-Ask-The-Landscape-of-R-Users-on-Stack-Overflow) by [David Robinson](https://channel9.msdn.com/Events/Speakers/david-robinson) at useR! Conference July 2017
+*Screenshot from Talk [We R What We Ask: The Landscape of R Users on Stack Overflow](https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/We-R-What-We-Ask-The-Landscape-of-R-Users-on-Stack-Overflow) by [David Robinson](https://channel9.msdn.com/Events/Speakers/david-robinson) at useR! Conference July 2017*
 
-[METACRAN](https://www.r-pkg.org) Project
+The visualization above is great, but by the nature of the data, it will only cover the most popular ones, ore more precisely, the packages with most questsions asked on StackOverflow. As a result, new packages or customized packages for a specialized domain may not be discovered by people. But flexibility and open-source contribution are what makes R so powerful, **new and niche packages should also have a platform where they can be introduced to their relevant audience**.  
 
-MetaCran does semantic search well, metrics calculation making sense
+Thus, Stage II will focus on personalized recommendation, drawing data from metadata such as maintainer discipline to function level features such as syntactic style. Dependency network mining and hierarchical clustering will also contribute to a clearer structure of the ecosystem as well as better suggestions.
 
-Stage II focus on personalized experience, syntactic style, research circles, associative filtering recommendation, mining common combos, discover niche/boutique packages.
+Last but not least, I encountered a website named [METACRAN](https://www.r-pkg.org) when writing the next steps. Though this project was developed mainly eight years ago, it boasts a nice semantic search feature that I think is not advertised enough. One thing that frustrated me on other R package search platform is their rigid keyword match algorithm. Searching for "visualization", "visuailzation**s**", and "visuali**s**ation" will yield vastly different results. MetaCRAN does this really well to my knowledge, and it also show trending packages and newly-updated packages near real-time. Kudos to [Jeroen Ooms](https://github.com/jeroen) at rOpenSci, who are main developer for the project. 
 
+One more thing, when designing the interactive 3D visualization, I experimented with many frameworks and libraries. The one that gives me the deepest impression is the R package `grapher` by [John Coene](https://github.com/JohnCoene). The navigation in the network is so smooth with "WASD" controls, and it makes me feels like Captain Kirk flying a starship in the R galaxy. The demonstration graph of this package happens to be the R package dependency network, which is very pretty not so insightful (given its color is purely based on coordinates). I tried to recreate the starship experience with my new semantic space data but couldn't get it working properly. I would be thrilled to learn if anyone know how to create such interaction for 3D visualization in R, Python, or even JS.
 
+<img src="./README.assets/grapher_demo.png" alt="grapher_demo" width="900" />
 
-
-
-Navigation Camera.
-
-![grapher_demo](./README.assets/grapher_demo.png)https://shiny.john-coene.com/cran/
+*Screenshot from grapher package demonstration website: https://shiny.john-coene.com/cran/*.
 
