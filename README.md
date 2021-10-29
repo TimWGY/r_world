@@ -83,7 +83,7 @@ For example, `ggplot2` is clustered into a topic cluster with `devtools` and `ev
 
 What surprised is that data wrangling packages like `dplyr`, `tibble`, `broom`, `data.table` are far apart from each other on the map. This got me wondering if they are actually closer in the original high-dimensional space. If we can fold the 2D map and make a hole on it, there may be closer paths between the clusters. 
 
-<p align="center"><img src="./README.assets/Einstein-rosen-bridge-model.png" alt="Einstein-rosen-bridge-model" width="500" /></p>
+<p align="center"><img src="./README.assets/Einstein-rosen-bridge-model.png" alt="Einstein-rosen-bridge-model" width="400" /></p>
 
 *MikeRun, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons*
 
